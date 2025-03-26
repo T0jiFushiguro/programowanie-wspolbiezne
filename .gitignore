@@ -3,4 +3,4 @@
 TestResults/
 **/bin/
 **/obj/
-**.cache
+.cache
