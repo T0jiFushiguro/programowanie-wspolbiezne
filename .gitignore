@@ -1,6 +1,6 @@
 .vs/
 .git/
 TestResults/
-*/bin/**
-*/obj/**
-*.cache
+**/bin/
+**/obj/
+**.cache
