@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\we_can_win_young_midoriya\\concurrent_programming\\ReactiveInteractiveUserInterface\\PresentationViewModelTest\\PresentationViewModelTest.csproj": {}
+    "C:\\we_can_win_young_midoriya\\programming\\programowanie-wspolbiezne\\ReactiveInteractiveUserInterface\\PresentationViewModelTest\\PresentationViewModelTest.csproj": {}
   },
   "projects": {
-    "C:\\we_can_win_young_midoriya\\concurrent_programming\\ReactiveInteractiveUserInterface\\BusinessLogic\\BusinessLogic.csproj": {
+    "C:\\we_can_win_young_midoriya\\programming\\programowanie-wspolbiezne\\ReactiveInteractiveUserInterface\\BusinessLogic\\BusinessLogic.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\we_can_win_young_midoriya\\concurrent_programming\\ReactiveInteractiveUserInterface\\BusinessLogic\\BusinessLogic.csproj",
+        "projectUniqueName": "C:\\we_can_win_young_midoriya\\programming\\programowanie-wspolbiezne\\ReactiveInteractiveUserInterface\\BusinessLogic\\BusinessLogic.csproj",
         "projectName": "TP.ConcurrentProgramming.BusinessLogic",
-        "projectPath": "C:\\we_can_win_young_midoriya\\concurrent_programming\\ReactiveInteractiveUserInterface\\BusinessLogic\\BusinessLogic.csproj",
+        "projectPath": "C:\\we_can_win_young_midoriya\\programming\\programowanie-wspolbiezne\\ReactiveInteractiveUserInterface\\BusinessLogic\\BusinessLogic.csproj",
         "packagesPath": "C:\\Users\\amogus\\.nuget\\packages\\",
-        "outputPath": "C:\\we_can_win_young_midoriya\\concurrent_programming\\ReactiveInteractiveUserInterface\\BusinessLogic\\obj\\",
+        "outputPath": "C:\\we_can_win_young_midoriya\\programming\\programowanie-wspolbiezne\\ReactiveInteractiveUserInterface\\BusinessLogic\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -32,8 +32,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\we_can_win_young_midoriya\\concurrent_programming\\ReactiveInteractiveUserInterface\\Data\\Data.csproj": {
-                "projectPath": "C:\\we_can_win_young_midoriya\\concurrent_programming\\ReactiveInteractiveUserInterface\\Data\\Data.csproj"
+              "C:\\we_can_win_young_midoriya\\programming\\programowanie-wspolbiezne\\ReactiveInteractiveUserInterface\\Data\\Data.csproj": {
+                "projectPath": "C:\\we_can_win_young_midoriya\\programming\\programowanie-wspolbiezne\\ReactiveInteractiveUserInterface\\Data\\Data.csproj"
               }
             }
           }
@@ -79,14 +79,14 @@
         }
       }
     },
-    "C:\\we_can_win_young_midoriya\\concurrent_programming\\ReactiveInteractiveUserInterface\\Data\\Data.csproj": {
+    "C:\\we_can_win_young_midoriya\\programming\\programowanie-wspolbiezne\\ReactiveInteractiveUserInterface\\Data\\Data.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\we_can_win_young_midoriya\\concurrent_programming\\ReactiveInteractiveUserInterface\\Data\\Data.csproj",
+        "projectUniqueName": "C:\\we_can_win_young_midoriya\\programming\\programowanie-wspolbiezne\\ReactiveInteractiveUserInterface\\Data\\Data.csproj",
         "projectName": "DataLayer",
-        "projectPath": "C:\\we_can_win_young_midoriya\\concurrent_programming\\ReactiveInteractiveUserInterface\\Data\\Data.csproj",
+        "projectPath": "C:\\we_can_win_young_midoriya\\programming\\programowanie-wspolbiezne\\ReactiveInteractiveUserInterface\\Data\\Data.csproj",
         "packagesPath": "C:\\Users\\amogus\\.nuget\\packages\\",
-        "outputPath": "C:\\we_can_win_young_midoriya\\concurrent_programming\\ReactiveInteractiveUserInterface\\Data\\obj\\",
+        "outputPath": "C:\\we_can_win_young_midoriya\\programming\\programowanie-wspolbiezne\\ReactiveInteractiveUserInterface\\Data\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -150,14 +150,14 @@
         }
       }
     },
-    "C:\\we_can_win_young_midoriya\\concurrent_programming\\ReactiveInteractiveUserInterface\\PresentationModel\\PresentationModel.csproj": {
+    "C:\\we_can_win_young_midoriya\\programming\\programowanie-wspolbiezne\\ReactiveInteractiveUserInterface\\PresentationModel\\PresentationModel.csproj": {
       "version": "4.3.0",
       "restore": {
-        "projectUniqueName": "C:\\we_can_win_young_midoriya\\concurrent_programming\\ReactiveInteractiveUserInterface\\PresentationModel\\PresentationModel.csproj",
+        "projectUniqueName": "C:\\we_can_win_young_midoriya\\programming\\programowanie-wspolbiezne\\ReactiveInteractiveUserInterface\\PresentationModel\\PresentationModel.csproj",
         "projectName": "TP.ConcurrentProgramming.PresentationModel",
-        "projectPath": "C:\\we_can_win_young_midoriya\\concurrent_programming\\ReactiveInteractiveUserInterface\\PresentationModel\\PresentationModel.csproj",
+        "projectPath": "C:\\we_can_win_young_midoriya\\programming\\programowanie-wspolbiezne\\ReactiveInteractiveUserInterface\\PresentationModel\\PresentationModel.csproj",
         "packagesPath": "C:\\Users\\amogus\\.nuget\\packages\\",
-        "outputPath": "C:\\we_can_win_young_midoriya\\concurrent_programming\\ReactiveInteractiveUserInterface\\PresentationModel\\obj\\",
+        "outputPath": "C:\\we_can_win_young_midoriya\\programming\\programowanie-wspolbiezne\\ReactiveInteractiveUserInterface\\PresentationModel\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -178,8 +178,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\we_can_win_young_midoriya\\concurrent_programming\\ReactiveInteractiveUserInterface\\BusinessLogic\\BusinessLogic.csproj": {
-                "projectPath": "C:\\we_can_win_young_midoriya\\concurrent_programming\\ReactiveInteractiveUserInterface\\BusinessLogic\\BusinessLogic.csproj"
+              "C:\\we_can_win_young_midoriya\\programming\\programowanie-wspolbiezne\\ReactiveInteractiveUserInterface\\BusinessLogic\\BusinessLogic.csproj": {
+                "projectPath": "C:\\we_can_win_young_midoriya\\programming\\programowanie-wspolbiezne\\ReactiveInteractiveUserInterface\\BusinessLogic\\BusinessLogic.csproj"
               }
             }
           }
@@ -229,14 +229,14 @@
         }
       }
     },
-    "C:\\we_can_win_young_midoriya\\concurrent_programming\\ReactiveInteractiveUserInterface\\PresentationViewModelTest\\PresentationViewModelTest.csproj": {
+    "C:\\we_can_win_young_midoriya\\programming\\programowanie-wspolbiezne\\ReactiveInteractiveUserInterface\\PresentationViewModelTest\\PresentationViewModelTest.csproj": {
       "version": "4.2.0",
       "restore": {
-        "projectUniqueName": "C:\\we_can_win_young_midoriya\\concurrent_programming\\ReactiveInteractiveUserInterface\\PresentationViewModelTest\\PresentationViewModelTest.csproj",
+        "projectUniqueName": "C:\\we_can_win_young_midoriya\\programming\\programowanie-wspolbiezne\\ReactiveInteractiveUserInterface\\PresentationViewModelTest\\PresentationViewModelTest.csproj",
         "projectName": "PresentationViewModelTest",
-        "projectPath": "C:\\we_can_win_young_midoriya\\concurrent_programming\\ReactiveInteractiveUserInterface\\PresentationViewModelTest\\PresentationViewModelTest.csproj",
+        "projectPath": "C:\\we_can_win_young_midoriya\\programming\\programowanie-wspolbiezne\\ReactiveInteractiveUserInterface\\PresentationViewModelTest\\PresentationViewModelTest.csproj",
         "packagesPath": "C:\\Users\\amogus\\.nuget\\packages\\",
-        "outputPath": "C:\\we_can_win_young_midoriya\\concurrent_programming\\ReactiveInteractiveUserInterface\\PresentationViewModelTest\\obj\\",
+        "outputPath": "C:\\we_can_win_young_midoriya\\programming\\programowanie-wspolbiezne\\ReactiveInteractiveUserInterface\\PresentationViewModelTest\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -257,8 +257,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\we_can_win_young_midoriya\\concurrent_programming\\ReactiveInteractiveUserInterface\\PresentationViewModel\\PresentationViewModel.csproj": {
-                "projectPath": "C:\\we_can_win_young_midoriya\\concurrent_programming\\ReactiveInteractiveUserInterface\\PresentationViewModel\\PresentationViewModel.csproj"
+              "C:\\we_can_win_young_midoriya\\programming\\programowanie-wspolbiezne\\ReactiveInteractiveUserInterface\\PresentationViewModel\\PresentationViewModel.csproj": {
+                "projectPath": "C:\\we_can_win_young_midoriya\\programming\\programowanie-wspolbiezne\\ReactiveInteractiveUserInterface\\PresentationViewModel\\PresentationViewModel.csproj"
               }
             }
           }
@@ -318,14 +318,14 @@
         }
       }
     },
-    "C:\\we_can_win_young_midoriya\\concurrent_programming\\ReactiveInteractiveUserInterface\\PresentationViewModel\\PresentationViewModel.csproj": {
+    "C:\\we_can_win_young_midoriya\\programming\\programowanie-wspolbiezne\\ReactiveInteractiveUserInterface\\PresentationViewModel\\PresentationViewModel.csproj": {
       "version": "4.2.0",
       "restore": {
-        "projectUniqueName": "C:\\we_can_win_young_midoriya\\concurrent_programming\\ReactiveInteractiveUserInterface\\PresentationViewModel\\PresentationViewModel.csproj",
+        "projectUniqueName": "C:\\we_can_win_young_midoriya\\programming\\programowanie-wspolbiezne\\ReactiveInteractiveUserInterface\\PresentationViewModel\\PresentationViewModel.csproj",
         "projectName": "TP.ConcurrentProgramming.PresentationViewModel",
-        "projectPath": "C:\\we_can_win_young_midoriya\\concurrent_programming\\ReactiveInteractiveUserInterface\\PresentationViewModel\\PresentationViewModel.csproj",
+        "projectPath": "C:\\we_can_win_young_midoriya\\programming\\programowanie-wspolbiezne\\ReactiveInteractiveUserInterface\\PresentationViewModel\\PresentationViewModel.csproj",
         "packagesPath": "C:\\Users\\amogus\\.nuget\\packages\\",
-        "outputPath": "C:\\we_can_win_young_midoriya\\concurrent_programming\\ReactiveInteractiveUserInterface\\PresentationViewModel\\obj\\",
+        "outputPath": "C:\\we_can_win_young_midoriya\\programming\\programowanie-wspolbiezne\\ReactiveInteractiveUserInterface\\PresentationViewModel\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -346,8 +346,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\we_can_win_young_midoriya\\concurrent_programming\\ReactiveInteractiveUserInterface\\PresentationModel\\PresentationModel.csproj": {
-                "projectPath": "C:\\we_can_win_young_midoriya\\concurrent_programming\\ReactiveInteractiveUserInterface\\PresentationModel\\PresentationModel.csproj"
+              "C:\\we_can_win_young_midoriya\\programming\\programowanie-wspolbiezne\\ReactiveInteractiveUserInterface\\PresentationModel\\PresentationModel.csproj": {
+                "projectPath": "C:\\we_can_win_young_midoriya\\programming\\programowanie-wspolbiezne\\ReactiveInteractiveUserInterface\\PresentationModel\\PresentationModel.csproj"
               }
             }
           }

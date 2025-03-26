@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "qljPI5xACsU=",
+  "dgSpecHash": "MhGLd0fnNT8=",
   "success": true,
-  "projectFilePath": "C:\\we_can_win_young_midoriya\\concurrent_programming\\ReactiveInteractiveUserInterface\\GraphicalUserInterface\\PresentationView.csproj",
+  "projectFilePath": "C:\\we_can_win_young_midoriya\\programming\\programowanie-wspolbiezne\\ReactiveInteractiveUserInterface\\GraphicalUserInterface\\PresentationView.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\amogus\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",
     "C:\\Users\\amogus\\.nuget\\packages\\system.reactive\\6.0.1\\system.reactive.6.0.1.nupkg.sha512"

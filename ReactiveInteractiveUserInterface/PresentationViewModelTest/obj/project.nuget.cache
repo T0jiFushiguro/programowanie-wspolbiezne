@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "PCF4vc9rq1c=",
+  "dgSpecHash": "JPHrfpQAKuU=",
   "success": true,
-  "projectFilePath": "C:\\we_can_win_young_midoriya\\concurrent_programming\\ReactiveInteractiveUserInterface\\PresentationViewModelTest\\PresentationViewModelTest.csproj",
+  "projectFilePath": "C:\\we_can_win_young_midoriya\\programming\\programowanie-wspolbiezne\\ReactiveInteractiveUserInterface\\PresentationViewModelTest\\PresentationViewModelTest.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\amogus\\.nuget\\packages\\coverlet.collector\\6.0.2\\coverlet.collector.6.0.2.nupkg.sha512",
     "C:\\Users\\amogus\\.nuget\\packages\\microsoft.applicationinsights\\2.22.0\\microsoft.applicationinsights.2.22.0.nupkg.sha512",
