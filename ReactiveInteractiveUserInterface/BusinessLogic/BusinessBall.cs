@@ -14,12 +14,15 @@ namespace TP.ConcurrentProgramming.BusinessLogic
   {
     public Ball(Data.IBall ball)
     {
+      diameter = ball.Diameter;
       ball.NewPositionNotification += RaisePositionChangeEvent;
     }
 
     #region IBall
 
     public event EventHandler<IPosition>? NewPositionNotification;
+
+    public double Diameter => diameter;
 
     #endregion IBall
 
@@ -29,6 +32,8 @@ namespace TP.ConcurrentProgramming.BusinessLogic
     {
       NewPositionNotification?.Invoke(this, new Position(e.x, e.y));
     }
+
+    private readonly double diameter;
 
     #endregion private
   }

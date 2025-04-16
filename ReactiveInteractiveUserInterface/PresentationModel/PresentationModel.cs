@@ -44,9 +44,9 @@ namespace TP.ConcurrentProgramming.Presentation.Model
       return eventObservable.Subscribe(x => observer.OnNext(x.EventArgs.Ball), ex => observer.OnError(ex), () => observer.OnCompleted());
     }
 
-    public override void Start(int numberOfBalls)
+    public override void Start(int numberOfBalls, double diameter)
     {
-      layerBellow.Start(numberOfBalls, StartHandler);
+      layerBellow.Start(numberOfBalls, diameter, StartHandler);
     }
 
     #endregion ModelAbstractApi
@@ -65,7 +65,7 @@ namespace TP.ConcurrentProgramming.Presentation.Model
 
     private void StartHandler(BusinessLogic.IPosition position, BusinessLogic.IBall ball)
     {
-      ModelBall newBall = new ModelBall(position.x, position.y, ball) { Diameter = 20.0 };
+      ModelBall newBall = new ModelBall(position.x, position.y, ball) { Diameter = ball.Diameter };
       BallChanged.Invoke(this, new BallChaneEventArgs() { Ball = newBall });
     }
 
