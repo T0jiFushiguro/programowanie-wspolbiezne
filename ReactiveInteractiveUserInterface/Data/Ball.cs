@@ -41,6 +41,7 @@ namespace TP.ConcurrentProgramming.Data
 
         internal void Move(Vector delta)
         {
+            
             int diameter = 20; //temporary
             if (Position.x + delta.x >= (0 + (diameter / 2)) && Position.x + delta.x <= (400 - (diameter / 2)) && Position.y + delta.y >= (0 + (diameter / 2)) && Position.y + delta.y <= (420 - (diameter / 2))){
                 Position = new Vector(Position.x + delta.x, Position.y + delta.y);
