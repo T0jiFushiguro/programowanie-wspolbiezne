@@ -41,6 +41,7 @@ namespace TP.ConcurrentProgramming.Data
 
         internal void Move(Vector delta)
         {
+            
             int diameter = 20; //temporary
             int borderWall = 5; //temporary
             int borderHeight = 400; //temporary

@@ -76,17 +76,17 @@ namespace TP.ConcurrentProgramming.Data
     private bool Disposed = false;
 
     private readonly Timer MoveTimer;
-    private Random RandomGenerator = new();
+    //private Random RandomGenerator = new();
     private List<Ball> BallsList = [];
 
-        private void Move(object? x)
+    private void Move(object? x)
+    {
+        foreach (Ball item in BallsList)
         {
-            foreach (Ball item in BallsList)
-            {
-                Vector vector = new Vector(item.Velocity.x / 100, item.Velocity.y / 100);
-                item.Move(vector);
-            }
+            Vector vector = new Vector(item.Velocity.x / 100, item.Velocity.y / 100);
+            item.Move(vector);
         }
+    }
 
         #endregion private
 
