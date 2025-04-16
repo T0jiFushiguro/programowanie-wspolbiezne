@@ -19,34 +19,34 @@ namespace TP.ConcurrentProgramming.Data
 
     public DataImplementation()
     {
-      MoveTimer = new Timer(Move, null, TimeSpan.Zero, TimeSpan.FromMilliseconds(100));
+      MoveTimer = new Timer(Move, null, TimeSpan.Zero, TimeSpan.FromMilliseconds(16.6));
     }
 
-    #endregion ctor
+        #endregion ctor
 
-    #region DataAbstractAPI
+        #region DataAbstractAPI
 
-    public override void Start(int numberOfBalls, Action<IVector, IBall> upperLayerHandler)
-    {
-      if (Disposed)
-        throw new ObjectDisposedException(nameof(DataImplementation));
-      if (upperLayerHandler == null)
-        throw new ArgumentNullException(nameof(upperLayerHandler));
-      Random random = new Random();
-      for (int i = 0; i < numberOfBalls; i++)
-      {
-        Vector startingPosition = new(random.Next(100, 400 - 100), random.Next(100, 400 - 100));
-        Ball newBall = new(startingPosition, startingPosition);
-        upperLayerHandler(startingPosition, newBall);
-        BallsList.Add(newBall);
-      }
-    }
+        public override void Start(int numberOfBalls, Action<IVector, IBall> upperLayerHandler)
+        {
+            if (Disposed)
+                throw new ObjectDisposedException(nameof(DataImplementation));
+            if (upperLayerHandler == null)
+                throw new ArgumentNullException(nameof(upperLayerHandler));
+            Random random = new Random();
+            for (int i = 0; i < numberOfBalls; i++)
+            {
+                Vector startingPosition = new(random.Next(100, 400 - 100), random.Next(100, 400 - 100));
+                Vector startingVelocity = new(random.Next(-50, 50), random.Next(-50, 50));
+                Ball newBall = new(startingPosition, startingVelocity);
+                upperLayerHandler(startingPosition, newBall);
+                BallsList.Add(newBall);
+            }
+        }
+        #endregion DataAbstractAPI
 
-    #endregion DataAbstractAPI
+        #region IDisposable
 
-    #region IDisposable
-
-    protected virtual void Dispose(bool disposing)
+        protected virtual void Dispose(bool disposing)
     {
       if (!Disposed)
       {
@@ -79,17 +79,20 @@ namespace TP.ConcurrentProgramming.Data
     private Random RandomGenerator = new();
     private List<Ball> BallsList = [];
 
-    private void Move(object? x)
-    {
-      foreach (Ball item in BallsList)
-        item.Move(new Vector((RandomGenerator.NextDouble() - 0.5) * 10, (RandomGenerator.NextDouble() - 0.5) * 10));
-    }
+        private void Move(object? x)
+        {
+            foreach (Ball item in BallsList)
+            {
+                Vector vector = new Vector(item.Velocity.x / 100, item.Velocity.y / 100);
+                item.Move(vector);
+            }
+        }
 
-    #endregion private
+        #endregion private
 
-    #region TestingInfrastructure
+        #region TestingInfrastructure
 
-    [Conditional("DEBUG")]
+        [Conditional("DEBUG")]
     internal void CheckBallsList(Action<IEnumerable<IBall>> returnBallsList)
     {
       returnBallsList(BallsList);
