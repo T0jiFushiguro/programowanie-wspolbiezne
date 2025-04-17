@@ -46,6 +46,7 @@ namespace TP.ConcurrentProgramming.Presentation.Model.Test
     {
       public event EventHandler<IPosition>? NewPositionNotification;
 
+      public double Diameter { get; }
       public void Dispose()
       {
         throw new NotImplementedException();
