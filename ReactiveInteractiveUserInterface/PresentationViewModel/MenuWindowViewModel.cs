@@ -13,20 +13,20 @@ using TP.ConcurrentProgramming.Presentation.ViewModel.MVVMLight;
 
 namespace TP.ConcurrentProgramming.PresentationViewModel
 {
-    public class MenuWindowViewModel : ViewModelBase, IDisposable
+    public class MenuWindowViewModel : ViewModelBase
     {
 
 
-        //public MenuWindowViewModel() : this(null)
-        //{
-        //    
-        //}
+        public Action<int, double>? StartMainWindowRequested { get; set; }
 
-        internal MenuWindowViewModel(ModelAbstractApi modelLayerAPI, MainWindowViewModel mainWindowVM)
+        #region Constructor
+
+        public MenuWindowViewModel()
         {
             ConfirmCommand = new RelayCommand(OnConfirm);
         }
 
+        #endregion
         #region Properties
 
         private int _ballsCount;
@@ -65,49 +65,10 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
 
         private void OnConfirm()
         {
-            //MainWindowViewModel viewModel = (MainWindowViewModel)DataContext;
-            //var mainWindowViewModel = (MainWindowViewModel)DataContext;
-            //
-            //mainWindowViewModel.Start(BallsCount, BallSize);
+            StartMainWindowRequested?.Invoke(BallsCount, BallSize);
         }
 
         #endregion
-
-        #region IDisposable
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!Disposed)
-            {
-                if (disposing)
-                {
-                    Observer.Dispose();
-                    ModelLayer.Dispose();
-                }
-
-                // TODO: free unmanaged resources (unmanaged objects) and override finalizer
-                // TODO: set large fields to null
-                Disposed = true;
-            }
-        }
-
-        public void Dispose()
-        {
-            if (Disposed)
-                throw new ObjectDisposedException(nameof(MainWindowViewModel));
-            Dispose(disposing: true);
-            GC.SuppressFinalize(this);
-        }
-
-        #endregion IDisposable
-
-        #region private
-
-        private IDisposable Observer = null;
-        private ModelAbstractApi ModelLayer;
-        private bool Disposed = false;
-
-        #endregion private
 
     }
 }

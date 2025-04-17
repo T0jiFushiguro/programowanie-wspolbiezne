@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using TP.ConcurrentProgramming.Presentation.ViewModel;
+using TP.ConcurrentProgramming.PresentationViewModel;
 
 namespace TP.ConcurrentProgramming.PresentationView
 {
@@ -22,6 +24,11 @@ namespace TP.ConcurrentProgramming.PresentationView
         public MenuWindow()
         {
             InitializeComponent();
+        }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            base.OnClosed(e);
         }
     }
 }

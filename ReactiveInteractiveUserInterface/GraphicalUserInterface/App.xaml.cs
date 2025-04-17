@@ -7,7 +7,10 @@
 //  https://github.com/mpostol/TP/discussions/182
 //__________________________________________________________________________________________
 
+using System;
 using System.Windows;
+using TP.ConcurrentProgramming.Presentation.Model;
+using TP.ConcurrentProgramming.Presentation.ViewModel;
 using TP.ConcurrentProgramming.PresentationViewModel;
 
 namespace TP.ConcurrentProgramming.PresentationView
@@ -21,11 +24,23 @@ namespace TP.ConcurrentProgramming.PresentationView
         {
             base.OnStartup(e);
 
-            var MenuWindow = new MenuWindow();
-            MenuWindow.DataContext = new MenuWindowViewModel();
-            MenuWindow.Show();
+            var menuWindow = new MenuWindow();
+            var modelView = new MenuWindowViewModel();
+            menuWindow.DataContext = modelView;
 
-            Current.MainWindow = MenuWindow;
+            modelView.StartMainWindowRequested = (ballsCount, ballSize) =>
+            {
+                var mainWindow = new MainWindow();
+                MainWindowViewModel mainWindowViewModel = new MainWindowViewModel();
+                mainWindow.DataContext = mainWindowViewModel;
+                mainWindowViewModel.Start(ballsCount, ballSize);
+                mainWindow.Show();
+
+                menuWindow.Close();
+            };
+
+            menuWindow.Show();
+
         }
     }
 }
