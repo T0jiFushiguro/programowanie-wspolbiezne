@@ -19,6 +19,7 @@ namespace TP.ConcurrentProgramming.Presentation.ViewModel.MVVMLight
 
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         public event PropertyChangedEventHandler PropertyChanged;
 
         #endregion INotifyPropertyChanged
@@ -50,6 +51,8 @@ namespace TP.ConcurrentProgramming.Presentation.ViewModel.MVVMLight
         #endregion API
     }
 =======
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
         // Metoda do ustawiania właściwości i powiadamiania o zmianach
