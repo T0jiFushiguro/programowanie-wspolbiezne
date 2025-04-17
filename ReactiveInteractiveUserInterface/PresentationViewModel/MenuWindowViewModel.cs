@@ -73,6 +73,7 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
 
         #endregion
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 
 
         //public MenuWindowViewModel() : this(null)
@@ -141,6 +142,11 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
 
 
 >>>>>>> Stashed changes
+=======
+
+
+
+>>>>>>> Stashed changes
         #region IDisposable
 
         protected virtual void Dispose(bool disposing)
@@ -177,7 +183,11 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
 
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 
+=======
+        
+>>>>>>> Stashed changes
 =======
         
 >>>>>>> Stashed changes
