@@ -17,9 +17,6 @@ namespace TP.ConcurrentProgramming.Presentation.ViewModel.MVVMLight
     {
         #region INotifyPropertyChanged
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
         public event PropertyChangedEventHandler PropertyChanged;
 
         #endregion INotifyPropertyChanged
@@ -50,23 +47,5 @@ namespace TP.ConcurrentProgramming.Presentation.ViewModel.MVVMLight
         }
         #endregion API
     }
-=======
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-        // Metoda do ustawiania właściwości i powiadamiania o zmianach
-     protected bool Set<T>(ref T field, T value, [CallerMemberName] string propertyName = "")
-     {
-         if (!EqualityComparer<T>.Default.Equals(field, value))
-         {
-             field = value;
-             RaisePropertyChanged(propertyName);
-             return true;
-         }
-         return false;
-     }
-     #endregion API
-  }
->>>>>>> Stashed changes
+
 }

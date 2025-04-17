@@ -8,7 +8,6 @@
 //__________________________________________________________________________________________
 
 using System.Windows;
-using TP.ConcurrentProgramming.Presentation.ViewModel;
 using TP.ConcurrentProgramming.PresentationViewModel;
 
 namespace TP.ConcurrentProgramming.PresentationView
@@ -23,11 +22,7 @@ namespace TP.ConcurrentProgramming.PresentationView
             base.OnStartup(e);
 
             var MenuWindow = new MenuWindow();
-
             MenuWindow.DataContext = new MenuWindowViewModel();
-            //MenuWindowViewModel viewModel = (MenuWindowViewModel)DataContext;
-            double screenWidth = SystemParameters.PrimaryScreenWidth;
-            double screenHeight = SystemParameters.PrimaryScreenHeight;
             MenuWindow.Show();
 
             Current.MainWindow = MenuWindow;
