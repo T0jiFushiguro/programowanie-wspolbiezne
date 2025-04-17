@@ -17,9 +17,9 @@ namespace TP.ConcurrentProgramming.PresentationView
     /// <summary>
     /// Logika interakcji dla klasy Window1.xaml
     /// </summary>
-    public partial class Window1 : Window
+    public partial class MenuWindow : Window
     {
-        public Window1()
+        public MenuWindow()
         {
             InitializeComponent();
         }
