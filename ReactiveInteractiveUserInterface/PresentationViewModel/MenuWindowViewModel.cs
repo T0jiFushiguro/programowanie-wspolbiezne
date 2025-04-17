@@ -43,6 +43,7 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
             set => Set(ref _ballSize, value);
         }
 
+        /*
         private double _fieldHeight;
         public double FieldHeight
         {
@@ -55,7 +56,7 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
         {
             get => _fieldWidth;
             set => Set(ref _fieldWidth, value);
-        }
+        } */
 
         #endregion
 
