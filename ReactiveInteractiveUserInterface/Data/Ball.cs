@@ -45,14 +45,13 @@ namespace TP.ConcurrentProgramming.Data
 
     internal void Move(Vector delta)
     {
-        int borderWall = 5; //temporary
         int borderHeight = 400; //temporary
         int borderWidth = 400;
 
         if (Position.x + delta.x >= (0) &&
-            Position.x + delta.x <= (borderWidth - diameter - borderWall*2) && 
+            Position.x + delta.x <= (borderWidth - diameter - 10) && 
             Position.y + delta.y >= (0) && 
-            Position.y + delta.y <= (borderHeight - diameter - borderWall*2)){
+            Position.y + delta.y <= (borderHeight - diameter - 10)){
             Position = new Vector(Position.x + delta.x, Position.y + delta.y);
             RaiseNewPositionChangeNotification(); 
         }
