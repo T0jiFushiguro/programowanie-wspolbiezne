@@ -15,7 +15,7 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
 {
     public class MenuWindowViewModel : ViewModelBase, IDisposable
     {
-
+       
 
         //public MenuWindowViewModel() : this(null)
         //{
@@ -74,7 +74,67 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
         #endregion
 
 
+        //public MenuWindowViewModel() : this(null)
+        //{
+        //    
+        //}
 
+<<<<<<< Updated upstream
+        internal MenuWindowViewModel(ModelAbstractApi modelLayerAPI, MainWindowViewModel mainWindowVM)
+        {
+            ConfirmCommand = new RelayCommand(OnConfirm);
+        }
+
+        #region Properties
+
+        private int _ballsCount;
+        public int BallsCount
+        {
+            get => _ballsCount;
+            set => Set(ref _ballsCount, value);
+        }
+
+        private double _ballSize;
+        public double BallSize
+        {
+            get => _ballSize;
+            set => Set(ref _ballSize, value);
+        }
+
+        private double _fieldHeight;
+        public double FieldHeight
+        {
+            get => _fieldHeight;
+            set => Set(ref _fieldHeight, value);
+        }
+
+        private double _fieldWidth;
+        public double FieldWidth
+        {
+            get => _fieldWidth;
+            set => Set(ref _fieldWidth, value);
+        }
+
+        #endregion
+
+        #region Command
+
+        public ICommand ConfirmCommand { get; }
+
+        private void OnConfirm()
+        {
+            //MainWindowViewModel viewModel = (MainWindowViewModel)DataContext;
+            //var mainWindowViewModel = (MainWindowViewModel)DataContext;
+            //
+            //mainWindowViewModel.Start(BallsCount, BallSize);
+        }
+
+        #endregion
+
+
+
+=======
+>>>>>>> Stashed changes
         #region IDisposable
 
         protected virtual void Dispose(bool disposing)
@@ -109,7 +169,11 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
         private ModelAbstractApi ModelLayer;
         private bool Disposed = false;
 
+<<<<<<< Updated upstream
 
+=======
+        
+>>>>>>> Stashed changes
 
         #endregion private
 
