@@ -51,7 +51,8 @@ namespace TP.ConcurrentProgramming.Data
         if (Position.x + delta.x >= (0) &&
             Position.x + delta.x <= (borderWidth - diameter - 10) && 
             Position.y + delta.y >= (0) && 
-            Position.y + delta.y <= (borderHeight - diameter - 10)){
+            Position.y + delta.y <= (borderHeight - diameter - 10))
+        {
             Position = new Vector(Position.x + delta.x, Position.y + delta.y);
             RaiseNewPositionChangeNotification(); 
         }

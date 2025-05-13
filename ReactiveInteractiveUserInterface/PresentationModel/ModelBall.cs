@@ -23,7 +23,6 @@ namespace TP.ConcurrentProgramming.Presentation.Model
     {
       TopBackingField = top;
       LeftBackingField = left;
-      Diameter = underneathBall.Diameter;
       underneathBall.NewPositionNotification += NewPositionNotification;
     }
 

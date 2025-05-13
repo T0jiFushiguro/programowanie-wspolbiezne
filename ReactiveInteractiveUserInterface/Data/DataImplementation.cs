@@ -47,7 +47,7 @@ namespace TP.ConcurrentProgramming.Data
 
         #region IDisposable
 
-        protected virtual void Dispose(bool disposing)
+    protected virtual void Dispose(bool disposing)
     {
       if (!Disposed)
       {
@@ -89,11 +89,11 @@ namespace TP.ConcurrentProgramming.Data
         }
     }
 
-        #endregion private
+    #endregion private
 
-        #region TestingInfrastructure
+    #region TestingInfrastructure
 
-        [Conditional("DEBUG")]
+    [Conditional("DEBUG")]
     internal void CheckBallsList(Action<IEnumerable<IBall>> returnBallsList)
     {
       returnBallsList(BallsList);
