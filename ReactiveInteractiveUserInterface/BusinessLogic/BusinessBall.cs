@@ -22,13 +22,14 @@ namespace TP.ConcurrentProgramming.BusinessLogic
       dataBall = ball;
       diameter = ball.Diameter;
       position = valPosition;
-      ball.NewPositionNotification += RaisePositionChangeEvent;
+      //ball.NewPositionNotification += RaisePositionChangeEvent;
+      ball.NewPositionNotificationAsync += RaisePositionChangeEventAsync;
     }
 
     #region IBall
 
-    public event EventHandler<IPosition>? NewPositionNotification;
-
+    //public event EventHandler<IPosition>? NewPositionNotification;
+    public event Func<object, IPosition, Task>? NewPositionNotificationAsync;
     public double Diameter => diameter;
 
     public IPosition position { get; private set; }
@@ -47,11 +48,26 @@ namespace TP.ConcurrentProgramming.BusinessLogic
 
     #region private
 
-    private void RaisePositionChangeEvent(object? sender, Data.IVector e)
+    private async Task RaisePositionChangeEventAsync(object sender, IVector e)
     {
       position = new Position(e.x, e.y);
-      NewPositionNotification?.Invoke(this, new Position(e.x, e.y));
+
+      // Wywołaj event asynchroniczny w warstwie biznesowej i poczekaj na jego obsługę
+      var handlers = NewPositionNotificationAsync;
+      if (handlers != null)
+      {
+        var invocationList = handlers.GetInvocationList()
+                                     .Cast<Func<object, IPosition, Task>>();
+        var tasks = invocationList.Select(h => h(this, position));
+        await Task.WhenAll(tasks);
+      }
     }
+
+    //private void RaisePositionChangeEvent(object? sender, Data.IVector e)
+    //{
+    //  position = new Position(e.x, e.y);
+    //  NewPositionNotification?.Invoke(this, new Position(e.x, e.y));
+    //}
 
     private readonly Data.IBall dataBall;
 

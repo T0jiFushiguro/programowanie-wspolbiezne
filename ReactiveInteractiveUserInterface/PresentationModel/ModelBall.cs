@@ -11,6 +11,7 @@
 
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using System.Runtime.CompilerServices;
 using TP.ConcurrentProgramming.BusinessLogic;
 using LogicIBall = TP.ConcurrentProgramming.BusinessLogic.IBall;
@@ -23,7 +24,8 @@ namespace TP.ConcurrentProgramming.Presentation.Model
     {
       TopBackingField = top;
       LeftBackingField = left;
-      underneathBall.NewPositionNotification += NewPositionNotification;
+      underneathBall.NewPositionNotificationAsync += NewPositionNotification;
+      //underneathBall.NewPositionNotification += NewPositionNotification;
     }
 
     #region IBall
@@ -67,10 +69,18 @@ namespace TP.ConcurrentProgramming.Presentation.Model
     private double TopBackingField;
     private double LeftBackingField;
 
-    private void NewPositionNotification(object sender, IPosition e)
+    //private void NewPositionNotification(object sender, IPosition e)
+    //{
+    //  Top = e.y; Left = e.x;
+    //}
+
+    private async Task NewPositionNotification(object sender, IPosition e)
     {
-      Top = e.y; Left = e.x;
+        Top = e.y;
+        Left = e.x;
+        await Task.CompletedTask; // jeśli nie masz innych async operacji
     }
+
 
     private void RaisePropertyChanged([CallerMemberName] string propertyName = "")
     {

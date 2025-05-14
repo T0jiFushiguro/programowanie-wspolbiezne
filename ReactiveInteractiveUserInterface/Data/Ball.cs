@@ -25,7 +25,8 @@ namespace TP.ConcurrentProgramming.Data
 
     #region IBall
 
-    public event EventHandler<IVector>? NewPositionNotification;
+    //public event EventHandler<IVector>? NewPositionNotification;
+    public event Func<object, IVector, Task>? NewPositionNotificationAsync;
 
     public IVector Velocity { get; set; }
     public double Diameter => diameter;
@@ -38,26 +39,30 @@ namespace TP.ConcurrentProgramming.Data
 
     private readonly double diameter;
 
-    private void RaiseNewPositionChangeNotification()
+    //private async Task RaiseNewPositionChangeNotification()
+    //{
+    //    NewPositionNotification?.Invoke(this, Position);
+    //}
+
+   protected async Task RaiseNewPositionChangeNotificationAsync()
     {
-      NewPositionNotification?.Invoke(this, Position);
+      var handlers = NewPositionNotificationAsync;
+      if (handlers != null)
+      {
+        var invocationList = handlers.GetInvocationList()
+                                     .Cast<Func<object, IVector, Task>>();
+        var tasks = invocationList.Select(handler => handler(this, Position));
+        await Task.WhenAll(tasks);
+      }
     }
 
-    internal void Move(Vector delta)
+
+    internal async Task Move(Vector delta)
     {
         Position = new Vector(Position.x + delta.x, Position.y + delta.y);
-        RaiseNewPositionChangeNotification();
-        /*
-            int borderHeight = 400; //temporary
-        int borderWidth = 400;
+        await RaiseNewPositionChangeNotificationAsync();
+        //await RaiseNewPositionChangeNotification();
 
-        if (Position.x + delta.x >= (0) &&
-            Position.x + delta.x <= (borderWidth - diameter - 10) && 
-            Position.y + delta.y >= (0) && 
-            Position.y + delta.y <= (borderHeight - diameter - 10))
-        {
-            
-        }*/
     }
 
     #endregion private

@@ -19,7 +19,8 @@ namespace TP.ConcurrentProgramming.Data
 
     public DataImplementation()
     {
-      MoveTimer = new Timer(Move, null, TimeSpan.Zero, TimeSpan.FromMilliseconds(16.6));
+        //MoveTimer = new Timer(Move, null, TimeSpan.Zero, TimeSpan.FromMilliseconds(16.6));
+        Move(null);
     }
 
         #endregion ctor
@@ -53,8 +54,9 @@ namespace TP.ConcurrentProgramming.Data
       {
         if (disposing)
         {
-          MoveTimer.Dispose();
+          //MoveTimer.Dispose();
           BallsList.Clear();
+          cts.Cancel();
         }
         Disposed = true;
       }
@@ -80,13 +82,25 @@ namespace TP.ConcurrentProgramming.Data
     //private Random RandomGenerator = new();
     private List<Ball> BallsList = [];
 
-    private void Move(object? x)
+    private CancellationTokenSource cts = new CancellationTokenSource();
+
+    private async Task Move(object? x)
     {
-        foreach (Ball item in BallsList)
-        {
-            Vector vector = new Vector(item.Velocity.x / 100, item.Velocity.y / 100);
-            item.Move(vector);
-        }
+       while (!cts.Token.IsCancellationRequested)
+       {
+           await Task.Run(async () =>
+           {
+               var moveTasks = BallsList.Select(async item =>
+               {
+                   Vector vector = new Vector(item.Velocity.x / 100, item.Velocity.y / 100);
+                   await item.Move(vector);
+               });
+
+               await Task.WhenAll(moveTasks);
+           });
+
+           await Task.Delay(TimeSpan.FromMilliseconds(16.6), cts.Token);
+       }
     }
 
     #endregion private
