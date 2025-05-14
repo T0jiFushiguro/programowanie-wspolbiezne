@@ -69,10 +69,6 @@ namespace TP.ConcurrentProgramming.Presentation.Model
     private double TopBackingField;
     private double LeftBackingField;
 
-    //private void NewPositionNotification(object sender, IPosition e)
-    //{
-    //  Top = e.y; Left = e.x;
-    //}
 
     private async Task NewPositionNotification(object sender, IPosition e)
     {

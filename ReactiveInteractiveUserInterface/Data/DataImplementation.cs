@@ -19,7 +19,6 @@ namespace TP.ConcurrentProgramming.Data
 
     public DataImplementation()
     {
-        //MoveTimer = new Timer(Move, null, TimeSpan.Zero, TimeSpan.FromMilliseconds(16.6));
         Move(null);
     }
 
@@ -54,7 +53,6 @@ namespace TP.ConcurrentProgramming.Data
       {
         if (disposing)
         {
-          //MoveTimer.Dispose();
           BallsList.Clear();
           cts.Cancel();
         }
@@ -75,11 +73,10 @@ namespace TP.ConcurrentProgramming.Data
 
     #region private
 
-    //private bool disposedValue;
     private bool Disposed = false;
 
     private readonly Timer MoveTimer;
-    //private Random RandomGenerator = new();
+
     private List<Ball> BallsList = [];
 
     private CancellationTokenSource cts = new CancellationTokenSource();

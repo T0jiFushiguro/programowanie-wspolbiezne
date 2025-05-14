@@ -25,7 +25,6 @@ namespace TP.ConcurrentProgramming.Data
 
     #region IBall
 
-    //public event EventHandler<IVector>? NewPositionNotification;
     public event Func<object, IVector, Task>? NewPositionNotificationAsync;
 
     public IVector Velocity { get; set; }
@@ -39,10 +38,7 @@ namespace TP.ConcurrentProgramming.Data
 
     private readonly double diameter;
 
-    //private async Task RaiseNewPositionChangeNotification()
-    //{
-    //    NewPositionNotification?.Invoke(this, Position);
-    //}
+   
 
    protected async Task RaiseNewPositionChangeNotificationAsync()
     {
@@ -61,8 +57,7 @@ namespace TP.ConcurrentProgramming.Data
     {
         Position = new Vector(Position.x + delta.x, Position.y + delta.y);
         await RaiseNewPositionChangeNotificationAsync();
-        //await RaiseNewPositionChangeNotification();
-
+        
     }
 
     #endregion private

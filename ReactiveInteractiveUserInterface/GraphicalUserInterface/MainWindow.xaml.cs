@@ -22,17 +22,6 @@ namespace TP.ConcurrentProgramming.PresentationView
     public MainWindow()
     {
         InitializeComponent();
-        //var vm = new MenuWindowViewModel();
-        //this.DataContext = vm;
-        //
-        //vm.StartMainWindowRequested = (BallsCount, BallSize) =>
-        //{
-        //    var mainWindow = new MainWindow();
-        //    MainWindowViewModel viewModel = (MainWindowViewModel)DataContext;
-        //    viewModel.Start(BallsCount, BallSize);
-        //    mainWindow.Show();
-        //    this.Close();
-        //};
 
     }
 
