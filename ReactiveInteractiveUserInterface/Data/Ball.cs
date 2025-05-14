@@ -45,7 +45,10 @@ namespace TP.ConcurrentProgramming.Data
 
     internal void Move(Vector delta)
     {
-        int borderHeight = 400; //temporary
+        Position = new Vector(Position.x + delta.x, Position.y + delta.y);
+        RaiseNewPositionChangeNotification();
+        /*
+            int borderHeight = 400; //temporary
         int borderWidth = 400;
 
         if (Position.x + delta.x >= (0) &&
@@ -53,9 +56,8 @@ namespace TP.ConcurrentProgramming.Data
             Position.y + delta.y >= (0) && 
             Position.y + delta.y <= (borderHeight - diameter - 10))
         {
-            Position = new Vector(Position.x + delta.x, Position.y + delta.y);
-            RaiseNewPositionChangeNotification(); 
-        }
+            
+        }*/
     }
 
     #endregion private
