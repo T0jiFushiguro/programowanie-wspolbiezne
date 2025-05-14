@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Numerics;
 using TP.ConcurrentProgramming.Data;
 
 namespace TP.ConcurrentProgramming.BusinessLogic
@@ -25,20 +26,45 @@ namespace TP.ConcurrentProgramming.BusinessLogic
         private void OnBallPositionChanged(object sender, IPosition newPosition)
         {
             // Logika biznesowa reagująca na zmianę pozycji kulki
-            // np. przekazywanie dalej, walidacje, agregacje itp.
-            
+            //
 
-            if (balls != null)
+            if (sender is IBall ballSender)
             {
-                System.Diagnostics.Debug.WriteLine($"Aktualna wartość:");
-                foreach (var ball in balls)
+                if (balls != null)
                 {
-
-                    ball.Velocity = new Vector(20, 20);
+                    BallCollision(balls, ballSender);
                 }
             }
-        
         }
+
+        private void BallCollision(IList<IBall> balls, IBall ballSender)
+        {
+
+            Vector2 positionBallSender = new Vector2((float)ballSender.position.x, (float)ballSender.position.y);
+            double diamterBallSender = ballSender.Diameter;
+
+            
+
+            foreach (var ball in balls)
+            {
+                Vector2 positionBall = new Vector2((float)ball.position.x, (float)ball.position.y);
+                double diamterBall = ball.Diameter;
+
+                //CheckCollision()
+
+                ball.Velocity = new Vector(20, 20);
+            }
+        }
+
+        private bool CheckCollision(Vector2 pos1, float radius1, Vector2 pos2, float radius2)
+        {
+            float distanceSquared = (pos1 - pos2).Length(); //LengthSquared
+            float radiusSum = radius1 + radius2;
+            return distanceSquared <= radiusSum * radiusSum;
+        }
+
+
+
 
         public void Update()
         {
