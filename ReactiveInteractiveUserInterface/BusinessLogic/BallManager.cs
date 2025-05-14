@@ -9,7 +9,7 @@ namespace TP.ConcurrentProgramming.BusinessLogic
     internal class BallManager
     {
 
-        private readonly IList<Data.IBall> balls;
+        private readonly IList<IBall> balls;
         private bool disposed = false;
 
         public BallManager(IList<IBall> balls) {
@@ -27,7 +27,7 @@ namespace TP.ConcurrentProgramming.BusinessLogic
         
             foreach (var ball in balls)
             {
-
+                
                 //ball.Velocity
             }
         
