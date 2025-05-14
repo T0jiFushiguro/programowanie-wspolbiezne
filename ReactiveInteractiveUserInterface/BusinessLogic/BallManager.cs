@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TP.ConcurrentProgramming.Data;
 
 namespace TP.ConcurrentProgramming.BusinessLogic
 {
+    public record Vector(double x, double y) : IVector;
     internal class BallManager
     {
 
@@ -13,7 +15,7 @@ namespace TP.ConcurrentProgramming.BusinessLogic
         private bool disposed = false;
 
         public BallManager(IList<IBall> balls) {
-            //this.balls = balls ?? throw new ArgumentNullException(nameof(balls));
+            this.balls = balls ?? throw new ArgumentNullException(nameof(balls));
             foreach (var ball in balls)
             {
                 ball.NewPositionNotification += OnBallPositionChanged;
@@ -24,11 +26,16 @@ namespace TP.ConcurrentProgramming.BusinessLogic
         {
             // Logika biznesowa reagująca na zmianę pozycji kulki
             // np. przekazywanie dalej, walidacje, agregacje itp.
-        
-            foreach (var ball in balls)
+            
+
+            if (balls != null)
             {
-                
-                //ball.Velocity
+                System.Diagnostics.Debug.WriteLine($"Aktualna wartość:");
+                foreach (var ball in balls)
+                {
+
+                    ball.Velocity = new Vector(20, 20);
+                }
             }
         
         }
