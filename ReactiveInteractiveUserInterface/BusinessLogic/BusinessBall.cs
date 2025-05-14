@@ -8,13 +8,18 @@
 //
 //_____________________________________________________________________________________________________________________________________
 
+
+using TP.ConcurrentProgramming.Data;
+
 namespace TP.ConcurrentProgramming.BusinessLogic
 {
   internal class Ball : IBall
   {
-    public Ball(Data.IBall ball)
+    public Ball(Data.IBall ball, IPosition valPosition)
     {
       diameter = ball.Diameter;
+      position = valPosition;
+      velocity = ball.Velocity;
       ball.NewPositionNotification += RaisePositionChangeEvent;
     }
 
@@ -24,12 +29,17 @@ namespace TP.ConcurrentProgramming.BusinessLogic
 
     public double Diameter => diameter;
 
+    public IPosition position { get; private set; }
+
+    public IVector velocity { get; set; }
+
     #endregion IBall
 
     #region private
 
     private void RaisePositionChangeEvent(object? sender, Data.IVector e)
     {
+      position = new Position(e.x, e.y);
       NewPositionNotification?.Invoke(this, new Position(e.x, e.y));
     }
 
