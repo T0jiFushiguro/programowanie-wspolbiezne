@@ -154,7 +154,6 @@ namespace TP.ConcurrentProgramming.BusinessLogic
             GC.SuppressFinalize(this);
         }
 
-
         protected virtual void Dispose(bool disposing)
         {
             if (disposed)
@@ -162,11 +161,14 @@ namespace TP.ConcurrentProgramming.BusinessLogic
 
             if (disposing)
             {
-                // Zwolnij zasoby zarządzane, jeśli istnieją
+                // Usuwamy subskrypcje eventów i zwalniamy zasoby zarządzane
                 if (balls != null)
                 {
                     foreach (var ball in balls)
                     {
+                        // Odsubskrybowanie eventu
+                        ball.NewPositionNotificationAsync -= OnBallPositionChanged;
+
                         if (ball is IDisposable disposableBall)
                         {
                             disposableBall.Dispose();
