@@ -19,7 +19,6 @@ namespace TP.ConcurrentProgramming.BusinessLogic
     {
       diameter = ball.Diameter;
       position = valPosition;
-      velocity = ball.Velocity;
       ball.NewPositionNotification += RaisePositionChangeEvent;
     }
 
@@ -30,8 +29,6 @@ namespace TP.ConcurrentProgramming.BusinessLogic
     public double Diameter => diameter;
 
     public IPosition position { get; private set; }
-
-    public IVector velocity { get; set; }
 
     #endregion IBall
 
