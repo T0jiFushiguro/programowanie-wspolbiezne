@@ -119,6 +119,7 @@ namespace TP.ConcurrentProgramming.BusinessLogic.Test
 
         public event Func<object, IVector, Task>? NewPositionNotificationAsync = null;
 
+        public float Mass { get; }
         public double Diameter { get; }
       }
     }

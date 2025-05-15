@@ -21,6 +21,7 @@ namespace TP.ConcurrentProgramming.BusinessLogic
     {
       dataBall = ball;
       diameter = ball.Diameter;
+      mass = ball.Mass;
       position = valPosition;
       //ball.NewPositionNotification += RaisePositionChangeEvent;
       ball.NewPositionNotificationAsync += RaisePositionChangeEventAsync;
@@ -31,6 +32,8 @@ namespace TP.ConcurrentProgramming.BusinessLogic
     //public event EventHandler<IPosition>? NewPositionNotification;
     public event Func<object, IPosition, Task>? NewPositionNotificationAsync;
     public double Diameter => diameter;
+
+    public float mass { get; private set; }
 
     public IPosition position { get; private set; }
 

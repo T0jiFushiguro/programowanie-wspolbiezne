@@ -57,6 +57,7 @@ namespace TP.ConcurrentProgramming.Data
   {
     event Func<object, IVector, Task>? NewPositionNotificationAsync;
     double Diameter { get; }
+    float Mass { get; }
     IVector Velocity { get; set; }
   }
 }

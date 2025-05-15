@@ -65,6 +65,8 @@ namespace TP.ConcurrentProgramming.BusinessLogic
     //event EventHandler<IPosition> NewPositionNotification;
     event Func<object, IPosition, Task>? NewPositionNotificationAsync;
     double Diameter { get; }
+
+    float mass { get; }
     public IPosition position { get; }
     public IVector Velocity { get; set; }
   }

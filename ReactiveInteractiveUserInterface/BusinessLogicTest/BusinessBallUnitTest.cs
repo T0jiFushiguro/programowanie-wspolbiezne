@@ -47,6 +47,7 @@ namespace TP.ConcurrentProgramming.BusinessLogic.Test
 
       public event Func<object, Data.IVector, Task>? NewPositionNotificationAsync;
       public double Diameter { get; }
+      public float Mass { get; }
       internal void Move()
       {
         NewPositionNotificationAsync?.Invoke(this, new VectorFixture(0.0, 0.0));

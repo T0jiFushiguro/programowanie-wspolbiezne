@@ -14,11 +14,12 @@ namespace TP.ConcurrentProgramming.Data
   {
     #region ctor
 
-    internal Ball(Vector initialPosition, Vector initialVelocity, double initialDiameter)
+    internal Ball(Vector initialPosition, Vector initialVelocity, double initialDiameter, float initialMass)
     {
       Position = initialPosition;
       Velocity = initialVelocity;
       diameter = initialDiameter;
+      mass = initialMass;
     }
 
     #endregion ctor
@@ -30,6 +31,8 @@ namespace TP.ConcurrentProgramming.Data
     public IVector Velocity { get; set; }
     public double Diameter => diameter;
 
+    public float Mass => mass;
+
     #endregion IBall
 
     #region private
@@ -38,6 +41,7 @@ namespace TP.ConcurrentProgramming.Data
 
     private readonly double diameter;
 
+    private readonly float mass;
    
 
    protected async Task RaiseNewPositionChangeNotificationAsync()

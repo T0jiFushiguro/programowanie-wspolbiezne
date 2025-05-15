@@ -37,7 +37,8 @@ namespace TP.ConcurrentProgramming.Data
             {
                 Vector startingPosition = new(random.Next(100, 400 - 100), random.Next(100, 400 - 100));
                 Vector startingVelocity = new(random.Next(-50, 50), random.Next(-50, 50));
-                Ball newBall = new(startingPosition, startingVelocity, diameter);
+                float mass = random.Next(1, 10);
+                Ball newBall = new(startingPosition, startingVelocity, diameter, mass);
                 //upperLayerHandler.Metho
                 upperLayerHandler(startingPosition, newBall);
                 BallsList.Add(newBall);

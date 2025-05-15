@@ -84,7 +84,7 @@ namespace TP.ConcurrentProgramming.BusinessLogic
                 IVector velocityBall = ball.Velocity;
                 double diamterBall = ball.Diameter;
 
-
+                
                 Vector2 positionDelta = positionBall - positionBallSender;
                 float ballDistance = positionDelta.Length();
                 float radiusSum = (float)diamterBall / 2f + (float)diamterBallSender / 2f;
@@ -101,8 +101,7 @@ namespace TP.ConcurrentProgramming.BusinessLogic
                     // Jeśli kulki oddalają się, nie wykonujemy odbicia
                     if (velocityAlongNormal <= 0)
                     {
-                        Vector ballVelocity = CalculateVelocity(ball.Velocity, collisionNormal);
-                        Vector ballSenderVelocity = CalculateVelocity(velocityBallSender, -collisionNormal);
+                        var (newVelocityBall, newVelocityBallSender) = CalculateElasticCollision(velocityBall, ball.mass, velocityBallSender, ballSender.mass, collisionNormal);
 
                         var firstLock = ball.GetHashCode() < ballSender.GetHashCode() ? ball : ballSender;
                         var secondLock = firstLock == ball ? ballSender : ball;
@@ -111,8 +110,8 @@ namespace TP.ConcurrentProgramming.BusinessLogic
                         {
                             lock (secondLock)
                             {
-                                ball.Velocity = ballVelocity;
-                                ballSender.Velocity = ballSenderVelocity;
+                                ball.Velocity = newVelocityBall;
+                                ballSender.Velocity = newVelocityBallSender;
                             }
                         }
                     } else if (depthInBall > 0f)
@@ -138,13 +137,35 @@ namespace TP.ConcurrentProgramming.BusinessLogic
             }
         }
 
-        private Vector CalculateVelocity(IVector velocity, Vector2 collisionNormal)
+        private (Vector newVelocity1, Vector newVelocity2) CalculateElasticCollision(
+            IVector velocity1, double mass1,
+            IVector velocity2, double mass2,
+            Vector2 collisionNormal)
         {
-            // Odbicie wektora prędkości względem normalnej: v' = v - 2*(v·n)*n
-            double dotVector = velocity.x * collisionNormal.X + velocity.y * collisionNormal.Y;
-            return new Vector(
-                velocity.x - 2 * dotVector * collisionNormal.X,
-                velocity.y - 2 * dotVector * collisionNormal.Y
+            Vector2 n = Vector2.Normalize(collisionNormal);
+        
+
+            Vector2 v1 = new Vector2((float)velocity1.x, (float)velocity1.y);
+            Vector2 v2 = new Vector2((float)velocity2.x, (float)velocity2.y);
+        
+            float v1n = Vector2.Dot(v1, n);
+            float v2n = Vector2.Dot(v2, n);
+        
+            // Obliczamy nowe składowe prędkości wzdłuż normalnej po zderzeniu
+            float v1nAfter = (float)((v1n * (mass1 - mass2) + 2 * mass2 * v2n) / (mass1 + mass2));
+            float v2nAfter = (float)((v2n * (mass2 - mass1) + 2 * mass1 * v1n) / (mass1 + mass2));
+        
+            // Składowe prędkości prostopadłe do normalnej pozostają bez zmian
+            Vector2 v1t = v1 - v1n * n;
+            Vector2 v2t = v2 - v2n * n;
+        
+            // Nowe prędkości to suma składowych normalnych po zderzeniu i niezmienionych stycznych
+            Vector2 v1After = v1t + v1nAfter * n;
+            Vector2 v2After = v2t + v2nAfter * n;
+        
+            return (
+                new Vector(v1After.X, v1After.Y),
+                new Vector(v2After.X, v2After.Y)
             );
         }
 

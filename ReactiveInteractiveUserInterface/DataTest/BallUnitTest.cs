@@ -17,14 +17,14 @@ namespace TP.ConcurrentProgramming.Data.Test
     public void ConstructorTestMethod()
     {
       Vector testinVector = new Vector(0.0, 0.0);
-      Ball newInstance = new(testinVector, testinVector, 20);
+      Ball newInstance = new(testinVector, testinVector, 20, 5);
     }
 
     [TestMethod]
     public async Task MoveTestMethod()
     {
         Vector initialPosition = new(10.0, 10.0);
-        Ball newInstance = new(initialPosition, new Vector(0.0, 0.0), 20);
+        Ball newInstance = new(initialPosition, new Vector(0.0, 0.0), 20, 5);
     
         IVector? currentPosition = null;
         int numberOfCallBackCalled = 0;

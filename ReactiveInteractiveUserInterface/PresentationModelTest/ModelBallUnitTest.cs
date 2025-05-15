@@ -47,6 +47,7 @@ namespace TP.ConcurrentProgramming.Presentation.Model.Test
       public event Func<object, IPosition, Task>? NewPositionNotificationAsync;
       
       public double Diameter { get; }
+      public float mass { get; }
       public IPosition position { get; }
       public Data.IVector Velocity { get; set; }
       public void Dispose()
