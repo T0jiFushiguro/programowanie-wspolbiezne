@@ -21,16 +21,35 @@ namespace TP.ConcurrentProgramming.Data.Test
     }
 
     [TestMethod]
-    public void MoveTestMethod()
+    public async Task MoveTestMethod()
     {
-      Vector initialPosition = new(10.0, 10.0);
-      Ball newInstance = new(initialPosition, new Vector(0.0, 0.0), 20);
-      IVector curentPosition = new Vector(0.0, 0.0);
-      int numberOfCallBackCalled = 0;
-      newInstance.NewPositionNotification += (sender, position) => { Assert.IsNotNull(sender); curentPosition = position; numberOfCallBackCalled++; };
-      newInstance.Move(new Vector(0.0, 0.0));
-      Assert.AreEqual<int>(1, numberOfCallBackCalled);
-      Assert.AreEqual<IVector>(initialPosition, curentPosition);
+        Vector initialPosition = new(10.0, 10.0);
+        Ball newInstance = new(initialPosition, new Vector(0.0, 0.0), 20);
+    
+        IVector? currentPosition = null;
+        int numberOfCallBackCalled = 0;
+    
+        var tcs = new TaskCompletionSource<bool>();
+    
+        newInstance.NewPositionNotificationAsync += async (sender, position) =>
+        {
+            Assert.IsNotNull(sender);
+            currentPosition = position;
+            numberOfCallBackCalled++;
+            tcs.SetResult(true);
+            await Task.CompletedTask;
+        };
+    
+        await newInstance.Move(new Vector(0.0, 0.0));
+    
+        // Czekamy na wywołanie eventu
+        await tcs.Task;
+    
+        Assert.AreEqual(1, numberOfCallBackCalled);
+        Assert.IsNotNull(currentPosition);
+        Assert.AreEqual(initialPosition.x, currentPosition!.x, 1e-6);
+        Assert.AreEqual(initialPosition.y, currentPosition.y, 1e-6);
     }
+
   }
 }

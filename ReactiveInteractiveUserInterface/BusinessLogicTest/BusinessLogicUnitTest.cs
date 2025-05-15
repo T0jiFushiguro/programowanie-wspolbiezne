@@ -27,20 +27,23 @@ namespace TP.ConcurrentProgramming.BusinessLogic.Test
     }
 
     [TestMethod]
-    public void DisposeTestMethod()
+    public async Task DisposeTestMethod()
     {
-      DataLayerDisposeFixcure dataLayerFixcure = new DataLayerDisposeFixcure();
-      BusinessLogicImplementation newInstance = new(dataLayerFixcure);
-      Assert.IsFalse(dataLayerFixcure.Disposed);
-      bool newInstanceDisposed = true;
-      newInstance.CheckObjectDisposed(x => newInstanceDisposed = x);
-      Assert.IsFalse(newInstanceDisposed);
-      newInstance.Dispose();
-      newInstance.CheckObjectDisposed(x => newInstanceDisposed = x);
-      Assert.IsTrue(newInstanceDisposed);
-      Assert.ThrowsException<ObjectDisposedException>(() => newInstance.Dispose());
-      Assert.ThrowsException<ObjectDisposedException>(() => newInstance.Start(0, 5, (position, ball) => { }));
-      Assert.IsTrue(dataLayerFixcure.Disposed);
+        DataLayerDisposeFixcure dataLayerFixcure = new DataLayerDisposeFixcure();
+        BusinessLogicImplementation newInstance = new(dataLayerFixcure);
+        Assert.IsFalse(dataLayerFixcure.Disposed);
+        bool newInstanceDisposed = true;
+        newInstance.CheckObjectDisposed(x => newInstanceDisposed = x);
+        Assert.IsFalse(newInstanceDisposed);
+        newInstance.Dispose();
+        newInstance.CheckObjectDisposed(x => newInstanceDisposed = x);
+        Assert.IsTrue(newInstanceDisposed);
+        Assert.ThrowsException<ObjectDisposedException>(() => newInstance.Dispose());
+        await Assert.ThrowsExceptionAsync<ObjectDisposedException>(async () =>
+        {
+            await newInstance.Start(0, 5, (position, ball) => { });
+        });
+        Assert.IsTrue(dataLayerFixcure.Disposed);
     }
 
     [TestMethod]
@@ -114,7 +117,7 @@ namespace TP.ConcurrentProgramming.BusinessLogic.Test
       {
         public IVector Velocity { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
-        public event EventHandler<IVector>? NewPositionNotification = null;
+        public event Func<object, IVector, Task>? NewPositionNotificationAsync = null;
 
         public double Diameter { get; }
       }

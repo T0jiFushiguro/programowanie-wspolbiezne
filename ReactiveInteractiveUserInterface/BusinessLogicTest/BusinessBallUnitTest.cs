@@ -13,15 +13,30 @@ namespace TP.ConcurrentProgramming.BusinessLogic.Test
   [TestClass]
   public class BallUnitTest
   {
-    [TestMethod]
-    public void MoveTestMethod()
+     [TestMethod]
+    public async Task MoveTestMethod()
     {
-      DataBallFixture dataBallFixture = new DataBallFixture();
-      Ball newInstance = new(dataBallFixture);
-      int numberOfCallBackCalled = 0;
-      newInstance.NewPositionNotification += (sender, position) => { Assert.IsNotNull(sender); Assert.IsNotNull(position); numberOfCallBackCalled++; };
-      dataBallFixture.Move();
-      Assert.AreEqual<int>(1, numberOfCallBackCalled);
+        DataBallFixture dataBallFixture = new DataBallFixture();
+        IPosition initialPosition = new Position(0, 0);
+        Ball newInstance = new Ball(dataBallFixture, initialPosition);
+    
+        int numberOfCallBackCalled = 0;
+        var tcs = new TaskCompletionSource<bool>();
+    
+        newInstance.NewPositionNotificationAsync += async (sender, position) =>
+        {
+            Assert.IsNotNull(sender);
+            Assert.IsNotNull(position);
+            numberOfCallBackCalled++;
+            tcs.SetResult(true);
+            await Task.CompletedTask;
+        };
+    
+        dataBallFixture.Move();
+    
+        await tcs.Task;
+    
+        Assert.AreEqual(1, numberOfCallBackCalled);
     }
 
     #region testing instrumentation
@@ -30,11 +45,11 @@ namespace TP.ConcurrentProgramming.BusinessLogic.Test
     {
       public Data.IVector Velocity { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
-      public event EventHandler<Data.IVector>? NewPositionNotification;
+      public event Func<object, Data.IVector, Task>? NewPositionNotificationAsync;
       public double Diameter { get; }
       internal void Move()
       {
-        NewPositionNotification?.Invoke(this, new VectorFixture(0.0, 0.0));
+        NewPositionNotificationAsync?.Invoke(this, new VectorFixture(0.0, 0.0));
       }
     }
 
