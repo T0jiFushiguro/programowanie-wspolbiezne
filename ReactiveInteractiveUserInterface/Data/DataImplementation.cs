@@ -19,34 +19,36 @@ namespace TP.ConcurrentProgramming.Data
 
     public DataImplementation()
     {
-        Move(null);
+       cts = new CancellationTokenSource();
     }
 
-        #endregion ctor
+    #endregion ctor
 
-        #region DataAbstractAPI
+    #region DataAbstractAPI
 
-        public override void Start(int numberOfBalls, double diameter, Action<IVector, IBall> upperLayerHandler)
+    public override void Start(int numberOfBalls, double diameter, Action<IVector, IBall> upperLayerHandler)
+    {
+        if (Disposed)
+            throw new ObjectDisposedException(nameof(DataImplementation));
+        if (upperLayerHandler == null)
+            throw new ArgumentNullException(nameof(upperLayerHandler));
+        Random random = new Random();
+        for (int i = 0; i < numberOfBalls; i++)
         {
-            if (Disposed)
-                throw new ObjectDisposedException(nameof(DataImplementation));
-            if (upperLayerHandler == null)
-                throw new ArgumentNullException(nameof(upperLayerHandler));
-            Random random = new Random();
-            for (int i = 0; i < numberOfBalls; i++)
-            {
-                Vector startingPosition = new(random.Next(100, 400 - 100), random.Next(100, 400 - 100));
-                Vector startingVelocity = new(random.Next(-50, 50), random.Next(-50, 50));
-                float mass = random.Next(1, 10);
-                Ball newBall = new(startingPosition, startingVelocity, diameter, mass);
-                //upperLayerHandler.Metho
-                upperLayerHandler(startingPosition, newBall);
-                BallsList.Add(newBall);
-            }
+            Vector startingPosition = new(random.Next(50, 550), random.Next(50, 550));
+            Vector startingVelocity = new(random.Next(-50, 50), random.Next(-50, 50));
+            float mass = random.Next(1, 10);
+            Ball newBall = new(startingPosition, startingVelocity, diameter, mass);
+            //upperLayerHandler.Metho
+            upperLayerHandler(startingPosition, newBall);
+            BallsList.Add(newBall);
         }
-        #endregion DataAbstractAPI
 
-        #region IDisposable
+        Task.Run(() => StartMove(null));
+    }
+    #endregion DataAbstractAPI
+
+    #region IDisposable
 
     protected virtual void Dispose(bool disposing)
     {
@@ -54,8 +56,9 @@ namespace TP.ConcurrentProgramming.Data
       {
         if (disposing)
         {
-          BallsList.Clear();
           cts.Cancel();
+          cts.Dispose();
+          BallsList.Clear();
         }
         Disposed = true;
       }
@@ -80,25 +83,37 @@ namespace TP.ConcurrentProgramming.Data
 
     private List<Ball> BallsList = [];
 
-    private CancellationTokenSource cts = new CancellationTokenSource();
+    private CancellationTokenSource cts;
 
     //Problem taki ze Task sie caly czas tworzy a ma byc raz zrobiony
     //Zobaczyc kod Task
     //Watek musi dluzej dzialac
-    private async Task Move(object? x)
+    private async Task StartMove(object? x)
     {
-       while (!cts.Token.IsCancellationRequested)
-       {
-           var moveTasks = BallsList.Select(item =>
-           {
-               Vector vector = new Vector(item.Velocity.x / 100, item.Velocity.y / 100);
-               return Task.Run(() => item.Move(vector));
-           });
-    
-           await Task.WhenAll(moveTasks);
-    
-           await Task.Delay(TimeSpan.FromMilliseconds(16.6), cts.Token);
-       }
+        var moveTasks = BallsList.Select(item =>
+        {
+            return Task.Run(async () =>
+            {
+                while (!cts.Token.IsCancellationRequested)
+                {
+                    Vector vector = new Vector(item.Velocity.x / 100, item.Velocity.y / 100);
+                    item.Move(vector);
+
+                    try
+                    {
+                        await Task.Delay(TimeSpan.FromMilliseconds(16.6), cts.Token);
+                    }
+                    catch (TaskCanceledException)
+                    {
+                        // Oczekiwane anulowanie, wyjdź z pętli
+                        break;
+                    }
+                }
+
+            }, cts.Token);
+        });
+        
+        await Task.WhenAll(moveTasks);
     }
 
 

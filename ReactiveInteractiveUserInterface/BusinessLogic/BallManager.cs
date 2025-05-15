@@ -11,39 +11,36 @@ namespace TP.ConcurrentProgramming.BusinessLogic
     public record Vector(double x, double y) : IVector;
     internal class BallManager
     {
-        private readonly object _ballslock = new object();
         private readonly IList<IBall> balls;
         private bool disposed = false;
-        private int borderHeight = 400;
-        private int borderWidth = 400;
+        private int borderHeight = 600;
+        private int borderWidth = 600;
 
         public BallManager(IList<IBall> balls) {
+            if (disposed)
+                throw new ObjectDisposedException(nameof(BallManager));
             this.balls = balls ?? throw new ArgumentNullException(nameof(balls));
 
-            
             foreach (var ball in balls)
             {
-                //ball.NewPositionNotification += OnBallPositionChanged;
-                //ball.NewPositionNotification += OnBallPositionChanged;
                 ball.NewPositionNotificationAsync += OnBallPositionChanged;
             }
         }
 
         private async Task OnBallPositionChanged(object sender, IPosition newPosition)
         {
-            // Logika biznesowa reagująca na zmianę pozycji kulki
+            if (disposed)
+                return;
 
+            // Logika biznesowa reagująca na zmianę pozycji kulki
             if (sender is IBall ballSender)
             {
-                //lock (_ballslock)
-                //{
-                    if (balls != null)
-                    {
-                        BallCollision(balls, ballSender);
-                        BorderCollision(ballSender);
+                if (balls != null)
+                {
+                    BallCollision(balls, ballSender);
+                    BorderCollision(ballSender);
 
-                    }
-                //}
+                } 
             }
 
             await Task.CompletedTask;
@@ -55,14 +52,56 @@ namespace TP.ConcurrentProgramming.BusinessLogic
             Vector2 velocityBall = new Vector2((float)ballSender.Velocity.x, (float)ballSender.Velocity.y);
             float diameterBall = (float)ballSender.Diameter;
 
-            if (positionBall.X <= (0) || positionBall.X + diameterBall + 10 >= borderWidth)
+            if (positionBall.X <= (0))
             {
-                velocityBall.X = -velocityBall.X;
+                if (velocityBall.X < 0)
+                {
+                    velocityBall.X = -velocityBall.X;
+                }
+
+                if (positionBall.X < -10)
+                {
+                    velocityBall.X /= 4f;
+                }
             }
 
-            if (positionBall.Y <= (0) || positionBall.Y + diameterBall + 10 >= borderHeight)
+            if (positionBall.X + diameterBall + 10 >= borderWidth)
             {
-                velocityBall.Y = -velocityBall.Y;   
+                if (velocityBall.X > 0)
+                {
+                    velocityBall.X = -velocityBall.X;
+                }
+
+                if (positionBall.X + diameterBall + 10 >= borderWidth + 10)
+                {
+                    velocityBall.X /= 4f;
+                }
+            }
+
+            if (positionBall.Y <= (0))
+            {
+                if (velocityBall.Y < 0)
+                {
+                    velocityBall.Y = -velocityBall.Y;
+                }
+
+                if (positionBall.Y < -10)
+                {
+                    velocityBall.Y /= 4f;
+                }
+            }
+
+            if (positionBall.Y + diameterBall + 10 >= borderHeight)
+            {
+                if (velocityBall.Y > 0)
+                {
+                    velocityBall.Y = -velocityBall.Y;
+                }
+
+                if (positionBall.Y + diameterBall + 10 >= borderHeight + 10)
+                {
+                    velocityBall.Y /= 4f;
+                }
             }
 
             ballSender.Velocity = new Vector(velocityBall.X, velocityBall.Y);
@@ -102,34 +141,32 @@ namespace TP.ConcurrentProgramming.BusinessLogic
                     if (velocityAlongNormal <= 0)
                     {
                         var (newVelocityBall, newVelocityBallSender) = CalculateElasticCollision(velocityBall, ball.mass, velocityBallSender, ballSender.mass, collisionNormal);
-
-                        var firstLock = ball.GetHashCode() < ballSender.GetHashCode() ? ball : ballSender;
-                        var secondLock = firstLock == ball ? ballSender : ball;
-
-                        lock (firstLock)
+                        
+                        lock (ball)
                         {
-                            lock (secondLock)
-                            {
-                                ball.Velocity = newVelocityBall;
-                                ballSender.Velocity = newVelocityBallSender;
-                            }
+                            ball.Velocity = newVelocityBall;
                         }
+
+                        lock (ballSender)
+                        {
+                            ballSender.Velocity = newVelocityBallSender;
+                        }
+                      
                     } else if (depthInBall > 0f)
                     {
                         float percent = 0.8f;
                         float slop = 0.01f;
 
                         Vector2 correctionVelocity = collisionNormal * MathF.Max(depthInBall - slop, 0) / 2f * percent / 16.6f;
-                        var firstLock = ball.GetHashCode() < ballSender.GetHashCode() ? ball : ballSender;
-                        var secondLock = firstLock == ball ? ballSender : ball;
 
-                        lock (firstLock)
+                        lock (ball)
                         {
-                            lock (secondLock)
-                            {
-                                ball.Velocity = new Vector(velocityBall.x + correctionVelocity.X, velocityBall.y + correctionVelocity.Y);
-                                ballSender.Velocity = new Vector(velocityBallSender.x - correctionVelocity.X, velocityBallSender.y - correctionVelocity.Y);
-                            }
+                            ball.Velocity = new Vector(velocityBall.x + correctionVelocity.X, velocityBall.y + correctionVelocity.Y);
+                        }
+
+                        lock (ballSender)
+                        {
+                            ballSender.Velocity = new Vector(velocityBallSender.x - correctionVelocity.X, velocityBallSender.y - correctionVelocity.Y);
                         }
                     }
                 }
@@ -182,12 +219,10 @@ namespace TP.ConcurrentProgramming.BusinessLogic
 
             if (disposing)
             {
-                // Usuwamy subskrypcje eventów i zwalniamy zasoby zarządzane
                 if (balls != null)
                 {
                     foreach (var ball in balls)
                     {
-                        // Odsubskrybowanie eventu
                         ball.NewPositionNotificationAsync -= OnBallPositionChanged;
 
                         if (ball is IDisposable disposableBall)
