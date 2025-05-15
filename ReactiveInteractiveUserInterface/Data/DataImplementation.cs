@@ -86,20 +86,18 @@ namespace TP.ConcurrentProgramming.Data
     {
        while (!cts.Token.IsCancellationRequested)
        {
-           await Task.Run(async () =>
+           var moveTasks = BallsList.Select(item =>
            {
-               var moveTasks = BallsList.Select(async item =>
-               {
-                   Vector vector = new Vector(item.Velocity.x / 100, item.Velocity.y / 100);
-                   await item.Move(vector);
-               });
-
-               await Task.WhenAll(moveTasks);
+               Vector vector = new Vector(item.Velocity.x / 100, item.Velocity.y / 100);
+               return Task.Run(() => item.Move(vector));
            });
-
+    
+           await Task.WhenAll(moveTasks);
+    
            await Task.Delay(TimeSpan.FromMilliseconds(16.6), cts.Token);
        }
     }
+
 
     #endregion private
 
