@@ -82,6 +82,9 @@ namespace TP.ConcurrentProgramming.Data
 
     private CancellationTokenSource cts = new CancellationTokenSource();
 
+    //Problem taki ze Task sie caly czas tworzy a ma byc raz zrobiony
+    //Zobaczyc kod Task
+    //Watek musi dluzej dzialac
     private async Task Move(object? x)
     {
        while (!cts.Token.IsCancellationRequested)
