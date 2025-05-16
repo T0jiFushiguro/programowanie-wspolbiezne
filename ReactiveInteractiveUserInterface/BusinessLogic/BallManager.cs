@@ -39,7 +39,6 @@ namespace TP.ConcurrentProgramming.BusinessLogic
                 {
                     BallCollision(balls, ballSender);
                     BorderCollision(ballSender);
-
                 } 
             }
 
@@ -59,9 +58,10 @@ namespace TP.ConcurrentProgramming.BusinessLogic
                     velocityBall.X = -velocityBall.X;
                 }
 
-                if (positionBall.X < -10)
+                if (positionBall.X < -4)
                 {
-                    velocityBall.X /= 4f;
+                    velocityBall.X = 10f;
+                    velocityBall.Y /= 5f;
                 }
             }
 
@@ -72,9 +72,10 @@ namespace TP.ConcurrentProgramming.BusinessLogic
                     velocityBall.X = -velocityBall.X;
                 }
 
-                if (positionBall.X + diameterBall + 10 >= borderWidth + 10)
+                if (positionBall.X + diameterBall + 10 >= borderWidth + 4)
                 {
-                    velocityBall.X /= 4f;
+                    velocityBall.X = -10f;
+                    velocityBall.Y /= 5f;
                 }
             }
 
@@ -85,9 +86,10 @@ namespace TP.ConcurrentProgramming.BusinessLogic
                     velocityBall.Y = -velocityBall.Y;
                 }
 
-                if (positionBall.Y < -10)
+                if (positionBall.Y < -4)
                 {
-                    velocityBall.Y /= 4f;
+                    velocityBall.X /= 5f;
+                    velocityBall.Y = 10f;
                 }
             }
 
@@ -98,13 +100,20 @@ namespace TP.ConcurrentProgramming.BusinessLogic
                     velocityBall.Y = -velocityBall.Y;
                 }
 
-                if (positionBall.Y + diameterBall + 10 >= borderHeight + 10)
+                if (positionBall.Y + diameterBall + 10 >= borderHeight + 4)
                 {
-                    velocityBall.Y /= 4f;
+                    velocityBall.X /= 5f;
+                    velocityBall.Y = -10f;
                 }
             }
 
-            ballSender.Velocity = new Vector(velocityBall.X, velocityBall.Y);
+            Vector velocity = new Vector(velocityBall.X, velocityBall.Y);
+
+            lock (ballSender)
+            {
+                ballSender.Velocity = velocity;
+            }
+            
         }
 
         private void BallCollision(IList<IBall> balls, IBall ballSender)
@@ -114,8 +123,7 @@ namespace TP.ConcurrentProgramming.BusinessLogic
             IVector velocityBallSender = ballSender.Velocity;
             double diamterBallSender = ballSender.Diameter;
 
-
-            foreach (var ball in balls)
+            foreach (IBall ball in balls)
             {
                 if (ball == ballSender) continue;
 
@@ -129,7 +137,8 @@ namespace TP.ConcurrentProgramming.BusinessLogic
                 float radiusSum = (float)diamterBall / 2f + (float)diamterBallSender / 2f;
 
                 //wykrycie kolizji
-                if (ballDistance <= radiusSum && ballDistance > 0) {
+                if (ballDistance <= radiusSum && ballDistance > 0)
+                {
                     float depthInBall = radiusSum - ballDistance;
 
                     Vector2 collisionNormal = positionDelta / ballDistance;
@@ -152,21 +161,26 @@ namespace TP.ConcurrentProgramming.BusinessLogic
                             ballSender.Velocity = newVelocityBallSender;
                         }
                       
-                    } else if (depthInBall > 0f)
+                    }
+                    else if (depthInBall > 0f)
                     {
                         float percent = 0.8f;
                         float slop = 0.01f;
 
                         Vector2 correctionVelocity = collisionNormal * MathF.Max(depthInBall - slop, 0) / 2f * percent / 16.6f;
 
+                        velocityBall = new Vector(velocityBall.x + correctionVelocity.X, velocityBall.y + correctionVelocity.Y);
+
+                        velocityBallSender = new Vector(velocityBallSender.x - correctionVelocity.X, velocityBallSender.y - correctionVelocity.Y);
+
                         lock (ball)
                         {
-                            ball.Velocity = new Vector(velocityBall.x + correctionVelocity.X, velocityBall.y + correctionVelocity.Y);
+                            ball.Velocity = velocityBall;
                         }
 
                         lock (ballSender)
                         {
-                            ballSender.Velocity = new Vector(velocityBallSender.x - correctionVelocity.X, velocityBallSender.y - correctionVelocity.Y);
+                            ballSender.Velocity = velocityBallSender;
                         }
                     }
                 }
