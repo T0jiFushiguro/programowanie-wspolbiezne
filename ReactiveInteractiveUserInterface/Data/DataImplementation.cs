@@ -39,12 +39,11 @@ namespace TP.ConcurrentProgramming.Data
             Vector startingVelocity = new(random.Next(-50, 50), random.Next(-50, 50));
             float mass = random.Next(1, 10);
             Ball newBall = new(startingPosition, startingVelocity, diameter, mass);
-            //upperLayerHandler.Metho
             upperLayerHandler(startingPosition, newBall);
             BallsList.Add(newBall);
         }
 
-        Task.Run(() => StartMove(null));
+        StartMove(null);
     }
     #endregion DataAbstractAPI
 
@@ -57,6 +56,24 @@ namespace TP.ConcurrentProgramming.Data
         if (disposing)
         {
           cts.Cancel();
+          
+          try
+          {
+              Task[] tasksArray = moveTasks.ToArray();
+              if (tasksArray != null && tasksArray.Length > 0)
+              {
+                  Task.WaitAll(tasksArray);
+              }
+          }
+          catch (AggregateException ae)
+          {
+              ae.Handle(e => e is OperationCanceledException);
+          }
+          catch (OperationCanceledException)
+          {
+              
+          }
+
           cts.Dispose();
           BallsList.Clear();
         }
@@ -79,6 +96,8 @@ namespace TP.ConcurrentProgramming.Data
 
     private bool Disposed = false;
 
+    private IEnumerable<Task> moveTasks;
+
     private readonly Timer MoveTimer;
 
     private List<Ball> BallsList = [];
@@ -90,7 +109,7 @@ namespace TP.ConcurrentProgramming.Data
     //Watek musi dluzej dzialac
     private async Task StartMove(object? x)
     {
-        var moveTasks = BallsList.Select(item =>
+        moveTasks = BallsList.Select(item =>
         {
             return Task.Run(async () =>
             {
@@ -101,10 +120,13 @@ namespace TP.ConcurrentProgramming.Data
 
                     try
                     {
+
+
                         await Task.Delay(TimeSpan.FromMilliseconds(16.6), cts.Token);
                     }
                     catch (TaskCanceledException)
                     {
+
                         // Oczekiwane anulowanie, wyjdź z pętli
                         break;
                     }
@@ -113,6 +135,7 @@ namespace TP.ConcurrentProgramming.Data
             }, cts.Token);
         });
         
+
         await Task.WhenAll(moveTasks);
     }
 
