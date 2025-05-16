@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
-using System.Numerics;
 using TP.ConcurrentProgramming.Data;
 
 namespace TP.ConcurrentProgramming.BusinessLogic
@@ -128,17 +129,23 @@ namespace TP.ConcurrentProgramming.BusinessLogic
                 if (ball == ballSender) continue;
 
                 Vector2 positionBall = new Vector2((float)ball.position.x, (float)ball.position.y);
-                IVector velocityBall = ball.Velocity;
                 double diamterBall = ball.Diameter;
-
                 
                 Vector2 positionDelta = positionBall - positionBallSender;
-                float ballDistance = positionDelta.Length();
+                float ballaDistancSquard = (positionDelta.X * positionDelta.X) + (positionDelta.Y * positionDelta.Y);
                 float radiusSum = (float)diamterBall / 2f + (float)diamterBallSender / 2f;
 
+                radiusSum *= radiusSum;
+
                 //wykrycie kolizji
-                if (ballDistance <= radiusSum && ballDistance > 0)
+                if (ballaDistancSquard <= radiusSum && ballaDistancSquard > 0)
                 {
+                    IVector velocityBall = ball.Velocity;
+
+                    float ballDistance = MathF.Sqrt(ballaDistancSquard);
+
+                    radiusSum /= radiusSum;
+
                     float depthInBall = radiusSum - ballDistance;
 
                     Vector2 collisionNormal = positionDelta / ballDistance;
