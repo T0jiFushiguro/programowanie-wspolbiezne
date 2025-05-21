@@ -101,8 +101,6 @@ namespace TP.ConcurrentProgramming.Data
 
     private IEnumerable<Task> moveTasks;
 
-    private readonly Timer MoveTimer;
-
     private List<Ball> BallsList;
 
     private CancellationTokenSource cts;

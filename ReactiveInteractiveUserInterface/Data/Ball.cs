@@ -49,8 +49,7 @@ namespace TP.ConcurrentProgramming.Data
       var handlers = NewPositionNotificationAsync;
       if (handlers != null)
       {
-        var invocationList = handlers.GetInvocationList()
-                                     .Cast<Func<object, IVector, Task>>();
+        var invocationList = handlers.GetInvocationList().Cast<Func<object, IVector, Task>>();
         var tasks = invocationList.Select(handler => handler(this, Position));
         await Task.WhenAll(tasks);
       }

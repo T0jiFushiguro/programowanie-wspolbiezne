@@ -24,7 +24,6 @@ namespace TP.ConcurrentProgramming.BusinessLogic
       mass = ball.Mass;
       position = valPosition;
       previousPosition = valPosition;
-      //ball.NewPositionNotification += RaisePositionChangeEvent;
       ball.NewPositionNotificationAsync += RaisePositionChangeEventAsync;
     }
 
@@ -62,8 +61,7 @@ namespace TP.ConcurrentProgramming.BusinessLogic
       var handlers = NewPositionNotificationAsync;
       if (handlers != null)
       {
-        var invocationList = handlers.GetInvocationList()
-                                     .Cast<Func<object, IPosition, Task>>();
+        var invocationList = handlers.GetInvocationList().Cast<Func<object, IPosition, Task>>();
         var tasks = invocationList.Select(h => h(this, position));
         await Task.WhenAll(tasks);
       }
