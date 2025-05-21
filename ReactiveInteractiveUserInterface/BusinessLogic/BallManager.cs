@@ -12,6 +12,7 @@ namespace TP.ConcurrentProgramming.BusinessLogic
     public record Vector(double x, double y) : IVector;
     internal class BallManager
     {
+        private SpatialGrid grid;
         private readonly IList<IBall> balls;
         private bool disposed = false;
         private int borderHeight = 600;
@@ -22,9 +23,12 @@ namespace TP.ConcurrentProgramming.BusinessLogic
                 throw new ObjectDisposedException(nameof(BallManager));
             this.balls = balls ?? throw new ArgumentNullException(nameof(balls));
 
+            grid = new SpatialGrid((int)balls[0].Diameter + 2);
+
             foreach (var ball in balls)
             {
                 ball.NewPositionNotificationAsync += OnBallPositionChanged;
+                grid.AddBall(ball);
             }
         }
 
@@ -38,6 +42,7 @@ namespace TP.ConcurrentProgramming.BusinessLogic
             {
                 if (balls != null)
                 {
+                    grid.UpdateBallPosition(ballSender);
                     BallCollision(balls, ballSender);
                     BorderCollision(ballSender);
                 } 
@@ -119,12 +124,12 @@ namespace TP.ConcurrentProgramming.BusinessLogic
 
         private void BallCollision(IList<IBall> balls, IBall ballSender)
         {
-
+            List<IBall> nearbyBalls = grid.GetNearbyBalls(ballSender);
             Vector2 positionBallSender = new Vector2((float)ballSender.position.x, (float)ballSender.position.y);
             IVector velocityBallSender = ballSender.Velocity;
             double diamterBallSender = ballSender.Diameter;
 
-            foreach (IBall ball in balls)
+            foreach (IBall ball in nearbyBalls)
             {
                 if (ball == ballSender) continue;
 
@@ -252,6 +257,7 @@ namespace TP.ConcurrentProgramming.BusinessLogic
                         }
                     }
                     balls.Clear();
+                    grid.Clear();
                 }
             }
 

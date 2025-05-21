@@ -49,6 +49,7 @@ namespace TP.ConcurrentProgramming.Presentation.Model.Test
       public double Diameter { get; }
       public float mass { get; }
       public IPosition position { get; }
+      public IPosition previousPosition { get; }
       public Data.IVector Velocity { get; set; }
       public void Dispose()
       {

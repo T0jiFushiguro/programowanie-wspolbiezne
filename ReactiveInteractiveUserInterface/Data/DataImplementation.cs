@@ -20,6 +20,7 @@ namespace TP.ConcurrentProgramming.Data
     public DataImplementation()
     {
        cts = new CancellationTokenSource();
+       BallsList = new List<Ball>();
     }
 
     #endregion ctor
@@ -59,10 +60,12 @@ namespace TP.ConcurrentProgramming.Data
           
           try
           {
-              Task[] tasksArray = moveTasks.ToArray();
-              if (tasksArray != null && tasksArray.Length > 0)
-              {
-                  Task.WaitAll(tasksArray);
+              if (moveTasks != null) {
+                Task[] tasksArray = moveTasks.ToArray();
+                if (tasksArray != null && tasksArray.Length > 0)
+                {
+                    Task.WaitAll(tasksArray);
+                }
               }
           }
           catch (AggregateException ae)
@@ -100,13 +103,10 @@ namespace TP.ConcurrentProgramming.Data
 
     private readonly Timer MoveTimer;
 
-    private List<Ball> BallsList = [];
+    private List<Ball> BallsList;
 
     private CancellationTokenSource cts;
 
-    //Problem taki ze Task sie caly czas tworzy a ma byc raz zrobiony
-    //Zobaczyc kod Task
-    //Watek musi dluzej dzialac
     private async Task StartMove(object? x)
     {
         moveTasks = BallsList.Select(item =>
@@ -120,21 +120,16 @@ namespace TP.ConcurrentProgramming.Data
 
                     try
                     {
-
-
                         await Task.Delay(TimeSpan.FromMilliseconds(16.6), cts.Token);
                     }
                     catch (TaskCanceledException)
                     {
-
-                        // Oczekiwane anulowanie, wyjdź z pętli
                         break;
                     }
                 }
 
             }, cts.Token);
         });
-        
 
         await Task.WhenAll(moveTasks);
     }

@@ -34,7 +34,10 @@ namespace TP.ConcurrentProgramming.BusinessLogic
       if (Disposed)
         throw new ObjectDisposedException(nameof(BusinessLogicImplementation));
       layerBellow.Dispose();
-      ballManager.Dispose();
+      if (ballManager != null)
+      {
+        ballManager.Dispose();
+      }
       Disposed = true;
     }
 

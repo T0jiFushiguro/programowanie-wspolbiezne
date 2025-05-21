@@ -23,6 +23,7 @@ namespace TP.ConcurrentProgramming.BusinessLogic
       diameter = ball.Diameter;
       mass = ball.Mass;
       position = valPosition;
+      previousPosition = valPosition;
       //ball.NewPositionNotification += RaisePositionChangeEvent;
       ball.NewPositionNotificationAsync += RaisePositionChangeEventAsync;
     }
@@ -36,6 +37,7 @@ namespace TP.ConcurrentProgramming.BusinessLogic
     public float mass { get; private set; }
 
     public IPosition position { get; private set; }
+    public IPosition previousPosition { get; private set; }
 
     public IVector Velocity
     {
@@ -53,6 +55,7 @@ namespace TP.ConcurrentProgramming.BusinessLogic
 
     private async Task RaisePositionChangeEventAsync(object sender, IVector e)
     {
+      previousPosition = position;
       position = new Position(e.x, e.y);
 
       // Wywołaj event asynchroniczny w warstwie biznesowej i poczekaj na jego obsługę

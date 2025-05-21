@@ -68,6 +68,7 @@ namespace TP.ConcurrentProgramming.BusinessLogic
 
     float mass { get; }
     public IPosition position { get; }
+    public IPosition previousPosition { get; }
     public IVector Velocity { get; set; }
   }
 }
