@@ -74,7 +74,7 @@ namespace TP.ConcurrentProgramming.Presentation.Model
     {
         Top = e.y;
         Left = e.x;
-        await Task.CompletedTask; // jeśli nie masz innych async operacji
+        await Task.CompletedTask;
     }
 
 
