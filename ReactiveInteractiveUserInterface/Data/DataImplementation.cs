@@ -111,7 +111,7 @@ namespace TP.ConcurrentProgramming.Data
 
     private async Task StartMove(object? x)
     {
-        moveTasks = BallsList.Select(item =>
+        moveTasks = BallsList.Select((item, index) =>
         {
             return Task.Run(async () =>
             {
@@ -120,6 +120,8 @@ namespace TP.ConcurrentProgramming.Data
                 double lastElapsedTime = 0;
                 double currentElapsedTime = 0;
                 double deltaTime = 0;
+
+                int numberBall = index;
 
                 while (!cts.Token.IsCancellationRequested)
                 {
@@ -130,7 +132,7 @@ namespace TP.ConcurrentProgramming.Data
                     Vector vector = new Vector(item.Velocity.x  * deltaTime, item.Velocity.y * deltaTime);
                     item.Move(vector);
 
-                    logger.Log(item.Velocity);
+                    logger.Log($"Ball {numberBall}: Velocity = ({item.Velocity.x}, {item.Velocity.y})");
 
                     lastElapsedTime = currentElapsedTime;
 
