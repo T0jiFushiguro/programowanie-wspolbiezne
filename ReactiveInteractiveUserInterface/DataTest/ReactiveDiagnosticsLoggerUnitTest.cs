@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive.Subjects;
 using System.Text;
 using System.Threading.Tasks;
 using TP.ConcurrentProgramming.Data;
@@ -16,7 +17,7 @@ namespace TP.ConcurrentProgramming.DataTest
         [TestInitialize]
         public void TestInitialize()
         {
-            tempFilePath = "logTest.txt";
+            tempFilePath = Path.Combine(Path.GetTempPath(), "logTest.txt");
         }
 
         [TestCleanup]
@@ -29,7 +30,7 @@ namespace TP.ConcurrentProgramming.DataTest
         }
 
         [TestMethod]
-        public async Task Constructor_ShouldInitializeLogger()
+        public void Constructor_ShouldInitializeLogger()
         {
             using (var logger = new ReactiveDiagnosticsLogger(tempFilePath))
             {
@@ -38,14 +39,28 @@ namespace TP.ConcurrentProgramming.DataTest
         }
 
         [TestMethod]
-        public async Task Log()
+        public void Log_ShouldEmitToInternalSubject()
         {
+            // Arrange
             var logger = new ReactiveDiagnosticsLogger(tempFilePath);
-            Assert.IsNotNull(logger);
-            logger.Log("Tekst");
-            logger.Dispose();
-            Assert.IsNotNull(logger);
+            var subjectField = typeof(ReactiveDiagnosticsLogger)
+                .GetField("loggerSubject", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
 
+            Assert.IsNotNull(subjectField, "Nie znaleziono pola loggerSubject przez refleksję.");
+
+            var subject = subjectField.GetValue(logger) as ISubject<string>;
+            Assert.IsNotNull(subject, "Nie można odczytać Subject.");
+
+            string? received = null;
+            var subscription = subject.Subscribe(value => received = value);
+
+            // Act
+            logger.Log("TEST_REFLECTION");
+
+            // Assert
+            Assert.AreEqual("TEST_REFLECTION", received, "Subject nie otrzymał wartości.");
+
+            subscription.Dispose();
         }
 
         [TestMethod]
@@ -54,15 +69,16 @@ namespace TP.ConcurrentProgramming.DataTest
             var logger = new ReactiveDiagnosticsLogger(tempFilePath);
             logger.Dispose();
 
-            // Drugie wywołanie Dispose nie powinno rzucać wyjątkiem
             try
             {
-                logger.Dispose();
+                logger.Dispose(); // powinno działać bez wyjątku
             }
             catch (Exception ex)
             {
                 Assert.Fail("Dispose thrown exception on second call: " + ex.Message);
             }
         }
+
+
     }
 }
