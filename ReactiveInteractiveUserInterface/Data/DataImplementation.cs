@@ -20,6 +20,7 @@ namespace TP.ConcurrentProgramming.Data
     public DataImplementation()
     {
        cts = new CancellationTokenSource();
+       logger = new ReactiveDiagnosticsLogger("logVelocity.txt");
        BallsList = new List<Ball>();
     }
 
@@ -78,6 +79,7 @@ namespace TP.ConcurrentProgramming.Data
           }
 
           cts.Dispose();
+          logger.Dispose();
           BallsList.Clear();
         }
         Disposed = true;
@@ -105,6 +107,8 @@ namespace TP.ConcurrentProgramming.Data
 
     private CancellationTokenSource cts;
 
+    private ReactiveDiagnosticsLogger logger;
+
     private async Task StartMove(object? x)
     {
         moveTasks = BallsList.Select(item =>
@@ -125,6 +129,8 @@ namespace TP.ConcurrentProgramming.Data
 
                     Vector vector = new Vector(item.Velocity.x  * deltaTime, item.Velocity.y * deltaTime);
                     item.Move(vector);
+
+                    logger.Log(item.Velocity);
 
                     lastElapsedTime = currentElapsedTime;
 
