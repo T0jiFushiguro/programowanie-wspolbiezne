@@ -111,14 +111,28 @@ namespace TP.ConcurrentProgramming.Data
         {
             return Task.Run(async () =>
             {
+
+                var stopwatch = Stopwatch.StartNew();
+                double lastElapsedTime = 0;
+                double currentElapsedTime = 0;
+                double deltaTime = 0;
+
                 while (!cts.Token.IsCancellationRequested)
                 {
-                    Vector vector = new Vector(item.Velocity.x / 100, item.Velocity.y / 100);
+
+                    currentElapsedTime = stopwatch.Elapsed.TotalSeconds;
+                    deltaTime = currentElapsedTime - lastElapsedTime;
+
+                    Vector vector = new Vector(item.Velocity.x  * deltaTime, item.Velocity.y * deltaTime);
                     item.Move(vector);
+
+                    lastElapsedTime = currentElapsedTime;
+
 
                     try
                     {
-                        await Task.Delay(TimeSpan.FromMilliseconds(16.6), cts.Token);
+                        //Male opoznienie zeby cpy nie bylo 100%
+                        await Task.Delay(TimeSpan.FromMilliseconds(1), cts.Token); //16.6
                     }
                     catch (TaskCanceledException)
                     {
