@@ -41,7 +41,6 @@ namespace TP.ConcurrentProgramming.DataTest
         [TestMethod]
         public void Log_ShouldEmitToInternalSubject()
         {
-            // Arrange
             var logger = new ReactiveDiagnosticsLogger(tempFilePath);
             var subjectField = typeof(ReactiveDiagnosticsLogger)
                 .GetField("loggerSubject", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
@@ -54,10 +53,8 @@ namespace TP.ConcurrentProgramming.DataTest
             string? received = null;
             var subscription = subject.Subscribe(value => received = value);
 
-            // Act
             logger.Log("TEST_REFLECTION");
 
-            // Assert
             Assert.AreEqual("TEST_REFLECTION", received, "Subject nie otrzymał wartości.");
 
             subscription.Dispose();
@@ -71,7 +68,7 @@ namespace TP.ConcurrentProgramming.DataTest
 
             try
             {
-                logger.Dispose(); // powinno działać bez wyjątku
+                logger.Dispose();
             }
             catch (Exception ex)
             {
